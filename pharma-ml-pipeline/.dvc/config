@@ -1,0 +1,4 @@
+['remote "azure"']
+    url = azure://mlflow/dvc
+    account = yourstorageaccount
+    container = dvcstore

@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/app
+      - data-volume:/app/data
+      - model-volume:/app/models
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - NVIDIA_VISIBLE_DEVICES=all
+    depends_on:
+      - mlflow
+    command: streamlit
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  mlflow:
+    image: mlflow-server
+    build:
+      context: ./MLFlow
+      dockerfile: Dockerfile.mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-volume:/mlflow
+    environment:
+      - MLFLOW_TRACKING_URI=http://localhost:5000
+      - MLFLOW_ARTIFACT_STORE=./mlflow/artifacts
+      - MLFLOW_BACKEND_STORE=postgresql://mlflow:mlflowpassword@postgres:5432/mlflow
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15.3
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=mlflow
+      - POSTGRES_PASSWORD=mlflowpassword
+      - POSTGRES_DB=mlflow
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+
+volumes:
+  data-volume:
+  model-volume:
+  mlflow-volume:
+  postgres-volume:

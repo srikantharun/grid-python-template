@@ -13,25 +13,90 @@ spec:
     metadata:
       labels:
         app: pharma-ml
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8501"
     spec:
+      serviceAccountName: pharma-ml-service-account
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: pharma-ml-training
         image: $ACR_NAME.azurecr.io/pharma-ml:latest
         resources:
           limits:
             nvidia.com/gpu: 1
+            memory: "8Gi"
+            cpu: "4"
           requests:
             nvidia.com/gpu: 1
+            memory: "4Gi"
+            cpu: "2"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
         env:
         - name: MLFLOW_TRACKING_URI
           value: "http://mlflow-service:5000"
+        - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: azure-credentials
+              key: APPLICATIONINSIGHTS_CONNECTION_STRING
+              optional: true
+        - name: AZURE_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: azure-credentials
+              key: AZURE_STORAGE_CONNECTION_STRING
+        - name: KAGGLE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: azure-credentials
+              key: KAGGLE_USERNAME
+        - name: KAGGLE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: azure-credentials
+              key: KAGGLE_KEY
         volumeMounts:
         - name: data-volume
           mountPath: /app/data
         - name: model-volume
           mountPath: /app/models
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        ports:
+        - containerPort: 8501
+          name: streamlit
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 30
+          periodSeconds: 5
       nodeSelector:
         accelerator: nvidia-tesla
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
       volumes:
       - name: data-volume
         persistentVolumeClaim:
@@ -39,3 +104,8 @@ spec:
       - name: model-volume
         persistentVolumeClaim:
           claimName: model-pvc
+      - name: tmp-volume
+        emptyDir: {}
+      - name: config-volume
+        configMap:
+          name: pharma-ml-config
