@@ -1,0 +1,19 @@
+[project]
+repo_url = "https://git.axelera.ai/ai-hw-team/pipewatch/pipewatch-lib"
+docs_url = "https://doc.axelera.ai/ai-hw-team/pipewatch/pipewatch-lib"
+
+[package]
+version = "0.3.2"
+package_name = "pipewatch-lib"
+
+[package.repositories.gitlab]
+url = "https://git.axelera.ai/api/v4/projects/242/packages/pypi/"
+username = "gitlab-ci-token"
+
+[package.repositories.nexus]
+url = "http://10.1.5.124/repository/pypi-axe/"
+username = "pypi-axe"
+
+[package.repositories.silverlight]
+url = "http://silverlight-host-0-zrh:4532/"
+username = "gitlab-runner"

@@ -1,0 +1,4 @@
+nav:
+  - Create a CI Data Dashboard: log_dashboard.md
+  - Set up a Pipeline Monitor: pipeline_monitor.md
+  - ...

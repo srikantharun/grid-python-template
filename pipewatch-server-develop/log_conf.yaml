@@ -1,0 +1,40 @@
+version: 1
+formatters:
+  file:
+    format: "%(asctime)s [%(name)s:%(levelname)s(%(process)d)] %(message)s"
+    datefmt: "%Y/%m/%d %H:%M:%S"
+  rich:
+    format: "[%(name)s] %(message)s"
+handlers:
+  console:
+    class: rich.logging.RichHandler
+    formatter: rich
+    level: DEBUG
+  file:
+    class: logging.handlers.TimedRotatingFileHandler
+    formatter: file
+    level: DEBUG
+    filename: logs/pipewatch-server.log
+    when: midnight
+    backupCount: 30
+loggers:
+  pipewatch_server:
+    handlers:
+      - console
+      - file
+    level: DEBUG
+  package_lib:
+    handlers:
+      - console
+      - file
+    level: DEBUG
+  fastapi:
+    handlers:
+      - console
+      - file
+    level: INFO
+  uvicorn:
+    handlers:
+      - console
+      - file
+    level: INFO

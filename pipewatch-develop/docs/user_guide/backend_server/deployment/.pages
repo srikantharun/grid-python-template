@@ -1,0 +1,4 @@
+nav:
+  - Deployment: index.md
+  - Example Setup: example_setup.md
+  - ...

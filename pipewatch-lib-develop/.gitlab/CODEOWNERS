@@ -1,0 +1,19 @@
+*                               @manuel.schmuck
+
+[Infrastructure]                @manuel.schmuck
+pyproject.toml
+.package-tools.toml
+.gitignore
+Makefile
+scripts/
+
+[Gitlab]                        @manuel.schmuck
+.gitlab/
+.gitlab-ci.yml
+
+[Documentation]                 @manuel.schmuck @wolfgang.roenninger
+README.md
+docs/
+
+[Package]                       @manuel.schmuck @wolfgang.roenninger
+pipewatch_lib/
