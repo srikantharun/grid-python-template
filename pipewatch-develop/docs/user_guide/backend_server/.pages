@@ -1,6 +1,0 @@
-nav:
-  - Backend Server: index.md
-  - configuration.md
-  - deployment
-  - API: api.md
-  - ...
