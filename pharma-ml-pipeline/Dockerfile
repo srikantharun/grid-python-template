@@ -22,7 +22,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install RDKit with conda
-RUN conda install -c conda-forge rdkit -y
+RUN pip install rdkit
 
 # Copy application code
 COPY . .

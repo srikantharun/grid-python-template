@@ -26,7 +26,7 @@ spec:
           type: RuntimeDefault
       containers:
       - name: pharma-ml-training
-        image: $ACR_NAME.azurecr.io/pharma-ml:latest
+        image: pharmamlacr1308.azurecr.io/pharma-ml:latest
         resources:
           limits:
             nvidia.com/gpu: 1

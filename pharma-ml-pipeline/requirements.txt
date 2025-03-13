@@ -1,5 +1,5 @@
 # Core ML Dependencies
-tensorflow==2.15.0
+#tensorflow==2.12.0
 torch==2.1.2
 transformers==4.37.2
 scikit-learn==1.3.2
@@ -7,13 +7,13 @@ numpy==1.26.1
 pandas==2.1.3
 
 # GPU Support
-tensorflow-gpu==2.15.0
-cudatoolkit==11.8.0
+#tensorflow-gpu==2.15.0
+#cudatoolkit==11.8.0
 
 # MLOps & Experiment Tracking
 mlflow==2.10.0
 azureml-mlflow==1.53.0
-azure-storage-blob==12.18.3
+azure-storage-blob<=12.13.0,>=12.5.0
 azure-identity==1.14.1
 azure-keyvault-secrets==4.7.0
 
@@ -30,7 +30,7 @@ plotly==5.18.0
 
 # Web Application
 streamlit==1.31.0
-streamlit-ketcher==0.1.0
+streamlit-ketcher==0.0.1
 
 # Kubernetes & Cloud
 kubernetes==28.1.0
