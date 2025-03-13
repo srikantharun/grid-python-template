@@ -14,7 +14,8 @@ This pipeline enables pharmaceutical researchers to:
 
 ## Architecture
 
-![Architecture Diagram](https://raw.githubusercontent.com/username/pharma-ml-pipeline/main/docs/images/architecture.png)
+![image](https://github.com/user-attachments/assets/3725e38f-52e2-41b3-beb8-f24122027cbb)
+
 
 The pipeline consists of the following components:
 
