@@ -14,7 +14,8 @@ This pipeline enables pharmaceutical researchers to:
 
 ## Architecture
 
-![image](https://github.com/user-attachments/assets/3725e38f-52e2-41b3-beb8-f24122027cbb)
+![image](https://github.com/user-attachments/assets/971c174c-7c56-4eb1-8f92-0172ac505e0a)
+
 
 
 The pipeline consists of the following components:
